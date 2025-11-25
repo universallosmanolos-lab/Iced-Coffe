@@ -173,7 +173,7 @@
       font-size:1rem;
     }
 
-    /* Estilos de la sección Contacto */
+    /* Estilos de la sección Contacto (solo para el cuerpo) */
     .contact{
       padding:4rem 20px;
       background:var(--accent); /* Fondo de contacto con el salmón suave */
@@ -261,6 +261,26 @@
       font-size:0.9rem;
       color:var(--muted);
     }
+
+    /* Estilos del Popover de Contacto (Pestañita) */
+    .contact-popover-overlay {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+    }
+    .contact-popover {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      max-width: 300px;
+      transform: scale(0.9);
+      transition: transform 0.2s ease-out;
+    }
+    .contact-popover.active {
+      transform: scale(1);
+    }
+    .contact-popover button {
+      transition: background-color 0.2s;
+    }
     
     /* Media Queries para Mobile */
     @media (max-width: 768px) {
@@ -296,11 +316,10 @@
     <!-- Logo: Ahora es un ancla a #inicio -->
     <a href="#inicio" class="logo">Iced Coffee</a>
 
-    <!-- Navegación de Escritorio: Eliminada pestaña 'Blog' -->
+    <!-- Navegación de Escritorio: Enlace de Contacto abre el popover -->
     <nav class="nav-desktop hidden md:flex">
       <a href="#blog">Inicio</a>
-      <!-- Enlace de Contacto abre Mailto -->
-      <a href="mailto:hildamariamartinez08@gmail.com" target="_blank" rel="noopener noreferrer">Contacto</a>
+      <a href="#" onclick="event.preventDefault(); openContactPopover();">Contacto</a> <!-- Llama a la nueva función -->
     </nav>
 
     <!-- Botón de Menú Móvil -->
@@ -309,11 +328,10 @@
     </button>
   </header>
 
-  <!-- Menú Móvil (oculto por defecto): Eliminada pestaña 'Blog' -->
+  <!-- Menú Móvil (oculto por defecto): Enlace de Contacto abre el popover -->
   <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg p-4 z-40 border-t border-[#f0e6f9]">
       <a href="#blog" class="block py-2 text-lg font-semibold text-[var(--text)] hover:text-[var(--accent2)] transition duration-300 border-b border-[#f0e6f9]">Inicio</a>
-      <!-- Enlace de Contacto abre Mailto -->
-      <a href="mailto:hildamariamartinez08@gmail.com" target="_blank" rel="noopener noreferrer" class="block py-2 text-lg font-semibold text-[var(--text)] hover:text-[var(--accent2)] transition duration-300">Contacto</a>
+      <a href="#" onclick="event.preventDefault(); openContactPopover();" class="block py-2 text-lg font-semibold text-[var(--text)] hover:text-[var(--accent2)] transition duration-300">Contacto</a> <!-- Llama a la nueva función -->
   </div>
 
 
@@ -328,7 +346,8 @@
       >
       <h1>Cold Brew, Hot Tracks</h1>
       <p>Para oyentes casuales que quieren vibrar bonito sin pensarlo tanto. Descubre tu próximo tema favorito.</p>
-      <a href="#blog" class="hero-button">Explora la Playlist</a>
+      <!-- TEXTO DEL BOTÓN ACTUALIZADO -->
+      <a href="#blog" class="hero-button">Explora las Playlists</a>
     </div>
   </section>
 
@@ -367,35 +386,35 @@
         <p>Vibra alto, ponte pilas y arranca el día con energía dulce y glam. La dosis de confianza que necesitas.</p>
       </article>
 
-      <!-- Post 6: Top canciones para la noche (Añadido para rellenar la grilla) -->
+      <!-- Post 6: Mejores de Iced Coffee (Título actualizado) -->
       <article class="post" onclick="openModal('night-songs')">
-        <h3>Top canciones para la noche</h3>
-        <p>Para esos momentos de reflexión o cuando el mood se pone un poco más misterioso y profundo.</p>
+        <h3>Mejores de Iced Coffee</h3>
+        <p>Los temas más icónicos de Ariana Grande, Taylor Swift y Red Velvet. El sonido que define la playlist.</p>
       </article>
 
     </div>
   </section>
 
-  <!-- SECCIÓN DE CONTACTO: Ahora solo contiene el texto para referencia, ya que el enlace del nav usa mailto -->
+  <!-- SECCIÓN DE CONTACTO: Ahora solo contiene el texto para referencia, ya que el enlace del nav usa un popover -->
   <section class="contact" id="contacto">
     <h2>¿Tienes una sugerencia?</h2>
-    <p>Mándanos tu recomendación musical favorita o simplemente saluda. Puedes escribir a nuestro correo:</p>
-    <p class="text-xl font-bold mb-4 text-[var(--text)]">hildamariamartinez08@gmail.com</p>
+    <p>Mándanos tu recomendación musical favorita o simplemente saluda. Puedes usar el botón **Contacto** en el menú superior para ver el correo.</p>
     
-    <!-- El formulario se mantiene por estética pero el contacto principal es el mailto -->
+    <!-- El formulario se mantiene por estética pero el contacto principal es el popover/mail -->
     <form class="contact-form">
       <input type="text" placeholder="Tu Nombre" required>
       <input type="email" placeholder="Tu Email" required>
       <textarea placeholder="Tu Mensaje o Sugerencia" rows="4" required></textarea>
       <button type="submit">Enviar Mensaje (Solo demostración)</button>
-      <p class="text-xs mt-2 text-center text-red-500">Nota: Este formulario no envía correos. Usa el enlace 'Contacto' del menú.</p>
+      <p class="text-xs mt-2 text-center text-red-500">Nota: Este formulario no envía correos. Usa la función 'Contacto' del menú para el envío real.</p>
     </form>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <p class="footer-logo">Iced Coffee</p>
-    <p>"The Playlist: La vida es mejor con música y un toque de glamour."</p>
+    <!-- TEXTO DEL FOOTER ACTUALIZADO -->
+    <p>"The Playlist: La vida es mejor con música y un Café Helado"</p>
     
     <!-- Iconos de Redes Sociales (Placeholders) -->
     <div class="social-links">
@@ -408,6 +427,23 @@
       &copy; 2025 Iced Coffee. Todos los derechos reservados.
     </p>
   </footer>
+
+
+  <!-- POPUP PEQUEÑO PARA CONTACTO (LA "PESTAÑITA") -->
+  <div id="contact-popover-overlay" class="contact-popover-overlay fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+    <div id="contact-popover" class="contact-popover p-6 w-full relative">
+      <button onclick="closeContactPopover()" class="absolute top-2 right-3 text-gray-400 hover:text-gray-700 text-3xl font-light leading-none">&times;</button>
+      <p class="text-lg font-semibold mb-2 text-center">Nuestro Correo Electrónico</p>
+      <p class="text-xl font-bold text-center text-[var(--accent2)] break-all mb-4">hildamariamartinez08@gmail.com</p>
+      <a 
+        href="mailto:hildamariamartinez08@gmail.com" 
+        class="block text-center py-2 px-4 rounded-lg font-semibold bg-[var(--accent2)] text-white hover:bg-[#9a756b] transition-colors duration-200"
+        onclick="closeContactPopover()"
+      >
+        Enviar Mensaje
+      </a>
+    </div>
+  </div>
 
 
   <!-- MODALES DE CONTENIDO (Mantenidos) -->
@@ -587,28 +623,59 @@
     </div>
   </div>
 
-  <!-- Modal: Top canciones para la noche (añadido previamente) -->
+  <!-- Modal: Mejores de Iced Coffee (Contenido actualizado) -->
   <div id="night-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
       <button onclick="closeModal('night-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
-      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para la noche</h3>
-      <p class="mb-4 text-[var(--muted)]">Cuando el sol se pone, el ambiente se vuelve más íntimo. Esta playlist es perfecta para esos momentos de reflexión, romance, o simplemente para acompañar una cena tranquila bajo la luz de la luna.</p>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Mejores de Iced Coffee</h3> <!-- Título del modal actualizado -->
+      <p class="mb-4 text-[var(--muted)]">El corazón de la playlist: una selección de los temas más representativos y esenciales de tres de las artistas que mejor definen el sonido chic, moderno y emocional de Iced Coffee.</p>
       
-      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🌙 Playlist Nocturna</h4>
+      <!-- Ariana Grande -->
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🎤 Ariana Grande – Top 10 canciones</h4>
       <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
-        <li><strong>Blinding Lights – The Weeknd</strong><br>Pop electrónico con un toque de nostalgia ochentera. Ideal para conducir de noche o un ambiente de fiesta más sofisticado.</li>
-        <li><strong>After Hours – The Weeknd</strong><br>Melancolía y beats suaves. Perfecta para las últimas horas de la noche.</li>
-        <li><strong>Golden – Harry Styles</strong><br>Canción ligera y soleada, pero que al anochecer da una sensación de calma y paseo nocturno.</li>
-        <li><strong>Adore You – Harry Styles</strong><br>Con un ritmo contagioso pero relajado, ideal para acompañar conversaciones tranquilas.</li>
-        <li><strong>Positions – Ariana Grande</strong><br>R&B suave y elegante, perfecto para un ambiente íntimo y relajado.</li>
-        <li><strong>Off the Table – Ariana Grande ft. The Weeknd</strong><br>Balada R&B de conversación profunda. Ideal para cuando solo quieres escuchar.</li>
-        <li><strong>Closer – The Chainsmokers ft. Halsey</strong><br>Pop melancólico y electrónico que evoca recuerdos.</li>
-        <li><strong>Noche de Novelas – Micro TDH ft. Lasso</strong><br>Pop latino suave y romántico, ideal para una noche de pareja.</li>
-        <li><strong>Tiroteo (Remix) – Marc Seguí, Rauw Alejandro & Pol Granch</strong><br>Un pop urbano suave con un toque melancólico, ideal para las últimas copas.</li>
-        <li><strong>Tusa – Karol G & Nicki Minaj (versión lounge)</strong><br>Una versión suave que mantiene la esencia pero baja las revoluciones.</li>
+        <li><strong>No Tears Left to Cry</strong><br>Una mezcla de resiliencia y esperanza tras la tristeza, con producción envolvente que transmite luz y fuerza.</li>
+        <li><strong>Into You</strong><br>Pop explosivo que captura la intensidad de la pasión, con ritmo vibrante y letras directas.</li>
+        <li><strong>God is a Woman</strong><br>Una declaración poderosa de feminidad y fuerza, con producción innovadora y atmósfera mística.</li>
+        <li><strong>Dangerous Woman</strong><br>Balada sensual que combina vulnerabilidad y empoderamiento, transmitiendo confianza en cada nota.</li>
+        <li><strong>One Last Time</strong><br>Una súplica emotiva de redención y despedida, perfecta para momentos de nostalgia.</li>
+        <li><strong>7 rings</strong><br>Himno de independencia y lujo, con un giro moderno en una melodía clásica.</li>
+        <li><strong>thank u, next</strong><br>Mensaje de crecimiento personal y gratitud tras relaciones pasadas, un canto de madurez.</li>
+        <li><strong>Positions</strong><br>Pop elegante que mezcla romance y confianza, mostrando versatilidad en el amor.</li>
+        <li><strong>Supernatural</strong><br>Una de sus más recientes, con atmósfera etérea y letras que exploran lo místico y emocional.</li>
+        <li><strong>Problem (ft. Iggy Azalea)</strong><br>Pop pegajoso que marcó su ascenso global, con energía juvenil y un coro inolvidable.</li>
       </ul>
       
-      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>La noche es tuya. Usa esta playlist para crear un ambiente memorable, ya sea de reflexión o de compañía íntima, con el R&B suave de Ariana y The Weeknd, y los toques latinos de Micro TDH.</p>
+      <!-- Taylor Swift -->
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🌟 Taylor Swift – Top 10 canciones</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>All Too Well (10 Minute Version)</strong><br>Una narrativa desgarradora sobre un amor perdido, llena de nostalgia y tristeza.</li>
+        <li><strong>Love Story</strong><br>Moderniza la tragedia romántica con un final esperanzador, convirtiéndose en un clásico universal.</li>
+        <li><strong>Blank Space</strong><br>Satírica y brillante, juega con su imagen pública y convierte la crítica en arte pop.</li>
+        <li><strong>Cruel Summer</strong><br>Pop vibrante que captura la intensidad de un romance secreto, explosiva y emocional.</li>
+        <li><strong>Enchanted</strong><br>Balada mágica que transmite la emoción de un encuentro inolvidable, con atmósfera de fantasía.</li>
+        <li><strong>Cardigan</strong><br>Melancólica y poética, habla de recuerdos y vulnerabilidad con delicadeza.</li>
+        <li><strong>You Belong With Me</strong><br>Himno juvenil de amor no correspondido, alegre y directo.</li>
+        <li><strong>Style</strong><br>Pop sofisticado que retrata una relación intensa y cíclica, elegante y atemporal.</li>
+        <li><strong>Peter</strong><br>Una de sus más recientes, con aire nostálgico y narrativo que evoca pérdida y memoria.</li>
+        <li><strong>The Archer</strong><br>Minimalista y emocional, refleja inseguridad y búsqueda de identidad con honestidad.</li>
+      </ul>
+
+      <!-- Red Velvet -->
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🍒 Red Velvet – Top 10 canciones</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>Sunny Side Up!</strong><br>Sofisticada y relajada, con un ritmo suave que transmite calma y frescura.</li>
+        <li><strong>Psycho</strong><br>Oscura y elegante, con letras que exploran relaciones complicadas y producción envolvente.</li>
+        <li><strong>Bad Boy</strong><br>Sensual y magnética, mezcla R&B con pop de manera impecable.</li>
+        <li><strong>Peek-A-Boo</strong><br>Misteriosa y adictiva, con un concepto único que atrapa desde el primer beat.</li>
+        <li><strong>Iced Coffee</strong><br>Una de sus piezas más recientes, con atmósfera suave y estética moderna, perfecta para momentos introspectivos.</li>
+        <li><strong>Underwater</strong><br>Hipnótica y envolvente, transmite calma y profundidad emocional como un viaje sonoro.</li>
+        <li><strong>Kingdom Come</strong><br>Balada sofisticada que muestra su lado más maduro y elegante, con armonías vocales exquisitas.</li>
+        <li><strong>I Just</strong><br>Minimalista y delicada, con un aire introspectivo que resalta la vulnerabilidad.</li>
+        <li><strong>Automatic</strong><br>Una joya de su discografía, con producción elegante y atmósfera etérea que se siente atemporal.</li>
+        <li><strong>Take It Slow</strong><br>Suave y melódica, invita a disfrutar el presente con calma y sensibilidad.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>Este recorrido por las mejores canciones de Ariana Grande, Taylor Swift y Red Velvet demuestra cómo la música puede ser un espejo de nuestras emociones y un motor para seguir adelante. Cada artista ofrece un universo sonoro distinto: Ariana con su fuerza vocal y atmósferas etéreas, Taylor con su capacidad narrativa y Red Velvet con su versatilidad artística. En Iced Coffee, creemos que estas canciones son más que simples melodías: son experiencias que nos acompañan en cada momento de la vida.</p>
     </div>
   </div>
 
@@ -622,11 +689,11 @@
           'Top canciones para una fiesta': 'party-songs',
           'Top canciones para llorar': 'sad-songs',
           'Top canciones para motivarte': 'motivate-songs',
-          'Top canciones para la noche': 'night-songs'
+          'Mejores de Iced Coffee': 'night-songs' 
       };
 
       /**
-       * Abre el modal correspondiente.
+       * Abre el modal principal correspondiente a un post.
        * @param {string} idBase - La base del ID del modal (ej: 'travel-songs').
        */
       function openModal(idBase) {
@@ -638,7 +705,7 @@
       }
 
       /**
-       * Cierra el modal correspondiente.
+       * Cierra el modal principal correspondiente a un post.
        * @param {string} idBase - La base del ID del modal (ej: 'travel-songs').
        */
       function closeModal(idBase) {
@@ -649,6 +716,45 @@
           }
       }
 
+      /**
+       * Abre el popover de Contacto ("pestañita").
+       */
+      function openContactPopover() {
+          const popoverOverlay = document.getElementById('contact-popover-overlay');
+          const popover = document.getElementById('contact-popover');
+          if (popoverOverlay && popover) {
+              // Cerrar menú móvil si está abierto
+              const mobileMenu = document.getElementById('mobile-menu');
+              if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                  mobileMenu.classList.add('hidden');
+              }
+              
+              popoverOverlay.classList.remove('hidden');
+              // Pequeño delay para aplicar la animación de escala
+              setTimeout(() => {
+                  popover.classList.add('active');
+              }, 10); 
+              document.body.style.overflow = 'hidden';
+          }
+      }
+
+      /**
+       * Cierra el popover de Contacto ("pestañita").
+       */
+      function closeContactPopover() {
+          const popoverOverlay = document.getElementById('contact-popover-overlay');
+          const popover = document.getElementById('contact-popover');
+          if (popoverOverlay && popover) {
+              popover.classList.remove('active');
+              // Esperar a que termine la animación antes de ocultar
+              setTimeout(() => {
+                  popoverOverlay.classList.add('hidden');
+                  document.body.style.overflow = '';
+              }, 200); 
+          }
+      }
+
+
       document.addEventListener('DOMContentLoaded', () => {
           const menuButton = document.getElementById('mobile-menu-button');
           const mobileMenu = document.getElementById('mobile-menu');
@@ -658,30 +764,16 @@
               mobileMenu.classList.toggle('hidden');
           });
 
-          // Cerrar el menú al hacer clic en un enlace (excepto mailto)
-          const navLinks = mobileMenu.querySelectorAll('a');
-          navLinks.forEach(link => {
-              // Comprueba si es un enlace de anclaje interno
-              if (link.getAttribute('href').startsWith('#')) {
-                  link.addEventListener('click', () => {
-                      mobileMenu.classList.add('hidden');
-                  });
-              }
-              // Para el enlace "Contacto" (mailto), solo se cierra el menú si se hace clic
-              if (link.getAttribute('href').startsWith('mailto:')) {
-                  link.addEventListener('click', () => {
-                      mobileMenu.classList.add('hidden');
-                  });
-              }
-          });
-
           // Implementación para desplazamiento suave al hacer clic en enlaces de anclaje
           document.querySelectorAll('a[href^="#"]').forEach(anchor => {
               anchor.addEventListener('click', function (e) {
-                  e.preventDefault();
-                  document.querySelector(this.getAttribute('href')).scrollIntoView({
-                      behavior: 'smooth'
-                  });
+                  // Solo prevenir el default si no es el enlace de contacto
+                  if (this.getAttribute('href') !== '#') {
+                      e.preventDefault();
+                      document.querySelector(this.getAttribute('href')).scrollIntoView({
+                          behavior: 'smooth'
+                      });
+                  }
               });
           });
 
