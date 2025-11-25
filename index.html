@@ -1,0 +1,699 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iced Coffee – The Playlist</title>
+  
+  <!-- Enlace a la fuente Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Carga de Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Variables de color inspiradas en la imagen de café/beige cálido */
+    :root{
+      --bg:#fbf8f0; /* Un beige muy claro, casi crema, para el fondo */
+      --card:#ffffff; /* Tarjetas blancas para contraste limpio */
+      --accent:#e0b29f; /* Un tono salmón/rosado suave para acentos */
+      --accent2:#b38b7e; /* Un tono café claro/terroso para acentos más profundos */
+      --text:#4a3f3a; /* Marrón oscuro para el texto principal */
+      --muted:#7c726a; /* Gris cálido para texto secundario */
+      --radius:18px;
+      font-family: "Poppins", system-ui, sans-serif;
+    }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      scroll-behavior: smooth;
+    }
+
+    /* Estilos del Header */
+    header{
+      background:white;
+      padding:1rem 2.5rem; /* 16px 40px */
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 2px 12px rgba(0,0,0,0.06);
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+
+    .logo{
+      font-size:1.6rem;
+      font-weight:700;
+      cursor:pointer; /* Indica que es un elemento interactivo */
+      /* Degradado en tonos cálidos */
+      background:linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent; 
+    }
+
+    nav a{
+      font-weight:600;
+      margin-left:2.5rem; /* 40px */
+      color:var(--text);
+      transition:color 0.2s;
+    }
+    nav a:hover{
+      color:var(--accent2);
+    }
+    
+    /* Estilos del Hero/Inicio */
+    .hero{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3rem 20px;
+      min-height:80vh;
+      text-align:center;
+    }
+    .hero > div{
+      max-width:1200px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:2.5rem; /* 40px */
+    }
+
+    /* Estilo del Perfil: Imagen redonda y con borde de acento */
+    .hero img{
+      width:90%;
+      max-width:350px;
+      height:auto;
+      /* Círculo para la foto de perfil */
+      border-radius:9999px; 
+      aspect-ratio: 1/1; /* Mantiene la forma circular */
+      box-shadow:0 15px 30px rgba(0, 0, 0, 0.1);
+      border:4px solid var(--accent); /* Borde con acento cálido */
+      object-fit:cover;
+    }
+
+    .hero h1{
+      font-size:2.8rem;
+      font-weight:700;
+      line-height:1.2;
+      margin:0;
+      background:linear-gradient(90deg, var(--accent2), #8a6a60); /* Degradado más cálido */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent; 
+    }
+
+    .hero p{
+      font-size:1.2rem;
+      color:var(--muted);
+      max-width:600px;
+      margin-top:0.5rem;
+    }
+
+    .hero-button{
+      display:inline-block;
+      padding:12px 30px;
+      background:var(--accent2); /* Botón con acento cálido */
+      color:white;
+      border-radius:50px;
+      font-weight:600;
+      margin-top:1rem;
+      text-decoration:none;
+      box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-button:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Estilos de la sección Blog */
+    .blog{
+      padding:4rem 20px;
+      background:var(--card);
+    }
+    .blog h2{
+      text-align:center;
+      font-size:2.2rem;
+      font-weight:700;
+      margin-bottom:3rem;
+    }
+    .posts-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:2rem;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .post{
+      background:var(--bg); /* Fondo de post con el beige claro */
+      padding:25px;
+      border-radius:var(--radius);
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+      border:1px solid #f0e6f9; /* Borde más suave */
+      transition:transform 0.3s, box-shadow 0.3s;
+      cursor:pointer;
+    }
+    .post:hover{
+      transform:translateY(-5px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    }
+    .post h3{
+      font-size:1.3rem;
+      font-weight:600;
+      margin-top:0;
+      color:var(--accent2); /* Título de post con el café claro */
+    }
+    .post p{
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    /* Estilos de la sección Contacto */
+    .contact{
+      padding:4rem 20px;
+      background:var(--accent); /* Fondo de contacto con el salmón suave */
+      color:var(--text);
+    }
+    .contact h2{
+      text-align:center;
+      font-size:2.2rem;
+      font-weight:700;
+      margin-bottom:1rem;
+      color:var(--text);
+    }
+    .contact p{
+      text-align:center;
+      max-width:600px;
+      margin:0 auto 2rem;
+      color:var(--muted);
+    }
+    .contact-form{
+      max-width:500px;
+      margin:0 auto;
+      padding:2rem;
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    }
+    .contact-form input, .contact-form textarea{
+      width:100%;
+      padding:12px;
+      margin-bottom:1rem;
+      border:2px solid #e0d9d0; /* Borde de form más cálido */
+      border-radius:10px;
+      font-family:inherit;
+      outline:none;
+      transition:border-color 0.2s, box-shadow 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus{
+      border-color:var(--accent2);
+      box-shadow:0 0 0 3px rgba(179, 139, 126, 0.3);
+    }
+    .contact-form button{
+      width:100%;
+      padding:12px;
+      background:var(--accent2);
+      color:white;
+      border:none;
+      border-radius:10px;
+      font-size:1.1rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:background 0.2s;
+    }
+    .contact-form button:hover{
+      background:#9a756b; /* Tono de café ligeramente más oscuro */
+    }
+
+    /* Estilos del Footer */
+    footer{
+      background:var(--text); /* Fondo del footer marrón oscuro */
+      color:white;
+      padding:2rem 20px;
+      text-align:center;
+    }
+    .footer-logo{
+      font-size:1.8rem;
+      font-weight:700;
+      margin-bottom:0.5rem;
+      background:linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent; 
+    }
+    .social-links a{
+      color:var(--accent); /* Iconos de redes sociales salmón suave */
+      margin:0 1rem;
+      font-size:1.5rem;
+      transition:color 0.2s;
+    }
+    .social-links a:hover{
+      color:var(--accent2);
+    }
+    .copyright{
+      margin-top:1rem;
+      font-size:0.9rem;
+      color:var(--muted);
+    }
+    
+    /* Media Queries para Mobile */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 20px;
+      }
+      .nav-desktop {
+        display: none;
+      }
+      .logo {
+        font-size: 1.4rem;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .hero > div {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .blog h2, .contact h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / BARRA DE NAVEGACIÓN -->
+  <header>
+    <!-- Logo: Ahora es un ancla a #inicio -->
+    <a href="#inicio" class="logo">Iced Coffee</a>
+
+    <!-- Navegación de Escritorio: Eliminada pestaña 'Blog' -->
+    <nav class="nav-desktop hidden md:flex">
+      <a href="#blog">Inicio</a>
+      <!-- Enlace de Contacto abre Mailto -->
+      <a href="mailto:hildamariamartinez08@gmail.com" target="_blank" rel="noopener noreferrer">Contacto</a>
+    </nav>
+
+    <!-- Botón de Menú Móvil -->
+    <button id="mobile-menu-button" class="md:hidden p-2 rounded-full text-lg text-[var(--text)] hover:bg-[var(--accent)] transition duration-300 focus:outline-none">
+        <span style="font-size: 1.5rem;">☰</span>
+    </button>
+  </header>
+
+  <!-- Menú Móvil (oculto por defecto): Eliminada pestaña 'Blog' -->
+  <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg p-4 z-40 border-t border-[#f0e6f9]">
+      <a href="#blog" class="block py-2 text-lg font-semibold text-[var(--text)] hover:text-[var(--accent2)] transition duration-300 border-b border-[#f0e6f9]">Inicio</a>
+      <!-- Enlace de Contacto abre Mailto -->
+      <a href="mailto:hildamariamartinez08@gmail.com" target="_blank" rel="noopener noreferrer" class="block py-2 text-lg font-semibold text-[var(--text)] hover:text-[var(--accent2)] transition duration-300">Contacto</a>
+  </div>
+
+
+  <!-- SECCIÓN DE INICIO / HERO -->
+  <section class="hero" id="inicio">
+    <div>
+      <!-- IMAGEN DE PERFIL ACTUALIZADA Y AHORA ES REDONDA -->
+      <img 
+        src="https://i.pinimg.com/736x/17/22/1d/17221d7e590ab34a6f11f4a766b8e4da.jpg" 
+        alt="Foto de Perfil"
+        onerror="this.onerror=null;this.src='https://placehold.co/600x600/b38b7e/ffffff?text=Tu+Perfil';" 
+      >
+      <h1>Cold Brew, Hot Tracks</h1>
+      <p>Para oyentes casuales que quieren vibrar bonito sin pensarlo tanto. Descubre tu próximo tema favorito.</p>
+      <a href="#blog" class="hero-button">Explora la Playlist</a>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE BLOG / POSTS (Mantenida como "Inicio" y destino de los posts) -->
+  <section class="blog" id="blog">
+    <h2>Blog de Recomendaciones</h2>
+    <div class="posts-grid">
+      
+      <!-- Post 1: Top canciones para un viaje -->
+      <article class="post" onclick="openModal('travel-songs')">
+        <h3>Top canciones para un viaje</h3>
+        <p>Siente el viento, mira el paisaje y deja que estas canciones te acompañen en el mood aventurero. Perfectas para la carretera.</p>
+      </article>
+
+      <!-- Post 2: Top canciones para relajarte -->
+      <article class="post" onclick="openModal('relax-songs')">
+        <h3>Top canciones para relajarte</h3>
+        <p>Ideal para desconectar, bajar revoluciones y soltar el estrés sin drama. Música suave y reconfortante.</p>
+      </article>
+
+      <!-- Post 3: Top canciones para una fiesta -->
+      <article class="post" onclick="openModal('party-songs')">
+        <h3>Top canciones para una fiesta</h3>
+        <p>Temas que prenden el ambiente y te hacen bailar hasta lo que no sabías mover. ¡Sube el volumen!</p>
+      </article>
+
+      <!-- Post 4: Top canciones para llorar -->
+      <article class="post" onclick="openModal('sad-songs')">
+        <h3>Top canciones para llorar</h3>
+        <p>Para esos días donde una lágrima con música bonita duele, pero sana. Playlist de desahogo emocional.</p>
+      </article>
+
+      <!-- Post 5: Top canciones para motivarte -->
+      <article class="post" onclick="openModal('motivate-songs')">
+        <h3>Top canciones para motivarte</h3>
+        <p>Vibra alto, ponte pilas y arranca el día con energía dulce y glam. La dosis de confianza que necesitas.</p>
+      </article>
+
+      <!-- Post 6: Top canciones para la noche (Añadido para rellenar la grilla) -->
+      <article class="post" onclick="openModal('night-songs')">
+        <h3>Top canciones para la noche</h3>
+        <p>Para esos momentos de reflexión o cuando el mood se pone un poco más misterioso y profundo.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE CONTACTO: Ahora solo contiene el texto para referencia, ya que el enlace del nav usa mailto -->
+  <section class="contact" id="contacto">
+    <h2>¿Tienes una sugerencia?</h2>
+    <p>Mándanos tu recomendación musical favorita o simplemente saluda. Puedes escribir a nuestro correo:</p>
+    <p class="text-xl font-bold mb-4 text-[var(--text)]">hildamariamartinez08@gmail.com</p>
+    
+    <!-- El formulario se mantiene por estética pero el contacto principal es el mailto -->
+    <form class="contact-form">
+      <input type="text" placeholder="Tu Nombre" required>
+      <input type="email" placeholder="Tu Email" required>
+      <textarea placeholder="Tu Mensaje o Sugerencia" rows="4" required></textarea>
+      <button type="submit">Enviar Mensaje (Solo demostración)</button>
+      <p class="text-xs mt-2 text-center text-red-500">Nota: Este formulario no envía correos. Usa el enlace 'Contacto' del menú.</p>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">Iced Coffee</p>
+    <p>"The Playlist: La vida es mejor con música y un toque de glamour."</p>
+    
+    <!-- Iconos de Redes Sociales (Placeholders) -->
+    <div class="social-links">
+      <a href="#"><span style="font-size: 1.5rem;">📸</span></a> <!-- Instagram -->
+      <a href="#"><span style="font-size: 1.5rem;">🎧</span></a> <!-- Spotify -->
+      <a href="#"><span style="font-size: 1.5rem;">🐦</span></a> <!-- Twitter -->
+    </div>
+
+    <p class="copyright">
+      &copy; 2025 Iced Coffee. Todos los derechos reservados.
+    </p>
+  </footer>
+
+
+  <!-- MODALES DE CONTENIDO (Mantenidos) -->
+  
+  <!-- Modal: Top canciones para un viaje -->
+  <div id="travel-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
+      <button onclick="closeModal('travel-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para un viaje</h3>
+      <p class="mb-4 text-[var(--muted)]">Viajar es más que moverse de un lugar a otro: es dejarse llevar por la música que acompaña cada kilómetro. Aquí te compartimos un top de 20 canciones en inglés y español que son perfectas para la carretera, el avión o incluso un paseo en tren.</p>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🌍 Canciones en inglés</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>Send Me On My Way – Rusted Root</strong><br>Alegre y optimista, ideal para arrancar el viaje con energía positiva.</li>
+        <li><strong>On the Road Again – Willie Nelson</strong><br>Un himno country que celebra la emoción de volver a la carretera.</li>
+        <li><strong>Life is a Highway – Tom Cochrane / Rascal Flatts</strong><br>Rock vibrante que convierte la vida en una aventura constante.</li>
+        <li><strong>Born to Run – Bruce Springsteen</strong><br>Clásico que evoca libertad y escapar hacia nuevos horizontes.</li>
+        <li><strong>Go Your Own Way – Fleetwood Mac</strong><br>Perfecta para viajes en solitario, con espíritu independiente.</li>
+        <li><strong>Don’t Stop Believin’ – Journey</strong><br>Himno de esperanza y motivación para cualquier trayecto.</li>
+        <li><strong>Fast Car – Tracy Chapman</strong><br>Melancólica y soñadora, ideal para viajes nocturnos.</li>
+        <li><strong>Sweet Home Alabama – Lynyrd Skynyrd</strong><br>Rock sureño que evoca paisajes abiertos y carreteras infinitas.</li>
+        <li><strong>Take Me Home, Country Roads – John Denver</strong><br>Nostálgica y cálida, conecta con la naturaleza y el regreso a casa.</li>
+        <li><strong>Holiday – Madonna</strong><br>Pop clásico que celebra la alegría de salir de rutina y viajar.</li>
+      </ul>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🇪🇸 Canciones en español</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>La Camisa Negra – Juanes</strong><br>Energía latina que anima cualquier trayecto.</li>
+        <li><strong>Me Gustas Tú – Manu Chao</strong><br>Ligera y viajera, menciona ciudades y transportes en su letra.</li>
+        <li><strong>De Música Ligera – Soda Stereo</strong><br>Rock argentino icónico, ideal para viajes con amigos.</li>
+        <li><strong>Rayando el Sol – Maná</strong><br>Balada rock que acompaña viajes largos con emoción.</li>
+        <li><strong>Oye Como Va – Santana</strong><br>Fusión latina que da ritmo a cualquier carretera.</li>
+        <li><strong>Vivir Mi Vida – Marc Anthony</strong><br>Himno de celebración y optimismo para viajes festivos.</li>
+        <li><strong>Clavado en un Bar – Maná</strong><br>Perfecta para viajes con tintes melancólicos y reflexivos.</li>
+        <li><strong>La Bicicleta – Carlos Vives & Shakira</strong><br>Alegre y tropical, evoca paseos y viajes por lugares cálidos.</li>
+        <li><strong>Cielito Lindo – Tradicional mexicano</strong><br>Canción folklórica que conecta con raíces y cultura en viajes.</li>
+        <li><strong>Color Esperanza – Diego Torres</strong><br>Inspiradora y positiva, ideal para viajes que buscan motivación.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>Este top mezcla clásicos en inglés y español que transmiten libertad, nostalgia, alegría y energía. Desde himnos de carretera como On the Road Again hasta vibrantes latinos como La Bicicleta, cada canción aporta un mood distinto para acompañar tu viaje.</p>
+    </div>
+  </div>
+
+  <!-- Modal: Top canciones para relajarte -->
+  <div id="relax-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
+      <button onclick="closeModal('relax-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para relajarte</h3>
+      <p class="mb-4 text-[var(--muted)]">La música tiene el poder de bajar las revoluciones y regalarnos momentos de paz. Ya sea después de un día intenso, en un viaje largo o simplemente para acompañar un café tranquilo, estas canciones son perfectas para crear un ambiente relajado.</p>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🌸 Playlist para la calma</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>Blue Hour – TXT</strong><br>Sonidos brillantes y suaves que transmiten serenidad juvenil.</li>
+        <li><strong>Breathe – AB6IX</strong><br>Una invitación a soltar tensiones y enfocarse en la respiración.</li>
+        <li><strong>Butterfly – BTS</strong><br>Melódica y delicada, ideal para momentos introspectivos.</li>
+        <li><strong>Into You – Ariana Grande (versión acústica)</strong><br>Suave y envolvente, perfecta para desconectar.</li>
+        <li><strong>Ocean Eyes – Billie Eilish</strong><br>Voces etéreas que generan un ambiente de calma profunda.</li>
+        <li><strong>Gravity – John Mayer</strong><br>Blues relajante que acompaña cualquier tarde tranquila.</li>
+        <li><strong>Amor Completo – Mon Laferte</strong><br>Balada íntima que transmite calidez y ternura.</li>
+        <li><strong>Tu Amor Es Mi Piel – Carla Morrison</strong><br>Sonidos delicados que envuelven como un abrazo.</li>
+        <li><strong>Euphoria – BTS (piano cover)</strong><br>Una versión instrumental que invita a la contemplación.</li>
+        <li><strong>Déjame Llorar – Ricardo Montaner</strong><br>Balada suave que acompaña momentos de introspección.</li>
+        <li><strong>Serotonin – DPR IAN</strong><br>K‑pop alternativo con atmósfera relajante y melódica.</li>
+        <li><strong>Slow Dancing – V (BTS)</strong><br>Jazz suave con un toque moderno, perfecto para tardes tranquilas.</li>
+        <li><strong>Electric Feel – MGMT (acoustic)</strong><br>Psicodelia ligera que relaja y transporta.</li>
+        <li><strong>Hasta la Raíz – Natalia Lafourcade</strong><br>Una canción íntima que conecta con lo esencial.</li>
+        <li><strong>Love Poem – IU</strong><br>Balada delicada que transmite paz y sensibilidad.</li>
+        <li><strong>Peace – Taylor Swift</strong><br>Minimalista y calmante, ideal para cerrar el día.</li>
+        <li><strong>Por Ti – Morat</strong><br>Pop suave que genera un ambiente cálido y relajado.</li>
+        <li><strong>Universe – EXO</strong><br>Balada con piano que transmite calma y esperanza.</li>
+        <li><strong>Flor de Loto – Zoé</strong><br>Psicodelia mexicana con un ritmo hipnótico y relajante.</li>
+        <li><strong>Daydream – J-Hope</strong><br>Alegre pero suave, perfecta para un descanso mental.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>Este top mezcla clásicos en inglés y español que transmiten libertad, nostalgia, alegría y energía. Desde himnos de carretera como On the Road Again hasta vibrantes latinos como La Bicicleta, cada canción aporta un mood distinto para acompañar tu viaje.</p>
+    </div>
+  </div>
+
+  <!-- Modal: Top canciones para una fiesta -->
+  <div id="party-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
+      <button onclick="closeModal('party-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para una fiesta</h3>
+      <p class="mb-4 text-[var(--muted)]">La música es el alma de cualquier fiesta. Este top reúne lo mejor para que tu celebración sea épica, con ritmos que encienden la pista y beats que no dejan a nadie quieto.</p>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🎉 Playlist para encender la fiesta</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>Despacito – Luis Fonsi & Daddy Yankee</strong><br>Un clásico moderno que garantiza que todos canten y bailen.</li>
+        <li><strong>Dynamite – BTS</strong><br>Energía explosiva y alegre, perfecta para levantar el ánimo.</li>
+        <li><strong>Uptown Funk – Mark Ronson ft. Bruno Mars</strong><br>Funk moderno que convierte cualquier sala en una pista de baile.</li>
+        <li><strong>Bailando – Enrique Iglesias ft. Gente de Zona</strong><br>Ritmos irresistibles que contagian movimiento.</li>
+        <li><strong>Gangnam Style – PSY</strong><br>Icono global con coreografía divertida que nunca pasa de moda.</li>
+        <li><strong>Tusa – Karol G & Nicki Minaj</strong><br>Actitud que se ha convertido en himno de fiesta.</li>
+        <li><strong>Firework – Katy Perry</strong><br>Vibrante y llena de energía para encender la noche.</li>
+        <li><strong>Gasolina – Daddy Yankee</strong><br>Clásico que enciende cualquier fiesta desde el primer beat.</li>
+        <li><strong>Sorry Not Sorry – Demi Lovato</strong><br>Poderosa y atrevida, ideal para bailar con confianza.</li>
+        <li><strong>Bboom Bboom – MOMOLAND</strong><br>Pegajosa y divertida, anima a todos a moverse.</li>
+        <li><strong>Vivir Mi Vida – Marc Anthony</strong><br>Una invitación a celebrar la vida con alegría.</li>
+        <li><strong>Shake It Off – Taylor Swift</strong><br>Alegre y liberadora, perfecta para bailar sin parar.</li>
+        <li><strong>Dákiti – Bad Bunny & Jhay Cortez</strong><br>Suave pero bailable, perfecto para la pista.</li>
+        <li><strong>Bang Bang Bang – BIGBANG</strong><br>Beats intensos para subir la energía.</li>
+        <li><strong>Don’t Stop the Music – Rihanna</strong><br>Mantiene la fiesta en movimiento sin descanso.</li>
+        <li><strong>La Bicicleta – Carlos Vives & Shakira</strong><br>Alegre y tropical, ideal para fiestas al aire libre.</li>
+        <li><strong>Mic Drop – BTS ft. Steve Aoki</strong><br>Fusión explosiva que prende cualquier ambiente.</li>
+        <li><strong>Pepas – Farruko</strong><br>Hit indispensable que se ha vuelto favorito en fiestas.</li>
+        <li><strong>Party Rock Anthem – LMFAO</strong><br>Electrónica divertida que garantiza saltos y coreografías.</li>
+        <li><strong>Con Calma – Daddy Yankee ft. Snow</strong><br>Ritmo contagioso para cerrar la noche con energía.</li>
+        <li><strong>El Reparto – Chocolate MC</strong><br>Himno del género, con ritmo callejero que enciende cualquier fiesta.</li>
+        <li><strong>La Chapa que Vibra – El Taiger</strong><br>Explosivo y perfecto para la pista.</li>
+        <li><strong>Palón Divino – Wampi</strong><br>Fresco y pegajoso, un clásico del reparto.</li>
+        <li><strong>El Guachineo – Chocolate MC</strong><br>Uno de los temas más icónicos del reparto, con un beat vibrante que levanta cualquier fiesta.</li>
+        <li><strong>La Pila – El Chulo</strong><br>Energía pura, ideal para mantener la fiesta encendida hasta el final.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>Este top mezcla lo mejor de los hits globales con la fuerza del Reparto cubano, incluyendo clásicos como El Guachineo de Chocolate MC, que se ha convertido en un himno de fiesta. Cada canción aporta la chispa necesaria para que tu celebración sea inolvidable.</p>
+    </div>
+  </div>
+
+  <!-- Modal: Top canciones para llorar -->
+  <div id="sad-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
+      <button onclick="closeModal('sad-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para llorar</h3>
+      <p class="mb-4 text-[var(--muted)]">Hay momentos en los que necesitamos música que nos acompañe en la tristeza, que nos permita soltar lágrimas y conectar con nuestras emociones más profundas. Estas canciones son perfectas para esos instantes de vulnerabilidad, cuando lo único que queremos es dejarnos llevar por la melancolía.</p>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">💔 Playlist para dejarse llevar</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>drivers license – Olivia Rodrigo</strong><br>Una balada que se convirtió en himno generacional. Olivia transmite con su voz frágil y poderosa la sensación de manejar sola por la ciudad mientras recuerda un amor perdido. Cada verso refleja la mezcla de nostalgia y dolor que acompaña a una ruptura, convirtiéndola en una canción perfecta para llorar sin reservas.</li>
+        <li><strong>traitor – Olivia Rodrigo</strong><br>Una confesión cruda sobre la traición emocional. La letra expone la vulnerabilidad de sentirse reemplazada demasiado pronto, y la interpretación de Olivia hace que cada palabra se sienta como un golpe directo al corazón.</li>
+        <li><strong>Heather – Conan Gray</strong><br>Una canción delicada que retrata el dolor del amor no correspondido. Conan canta con melancolía sobre la inseguridad y la comparación constante con alguien más, creando un ambiente íntimo y desgarrador.</li>
+        <li><strong>The Story – Conan Gray</strong><br>Una narración íntima que expone heridas emocionales y recuerdos difíciles. Su tono confesional convierte la canción en un refugio para quienes cargan con historias de dolor y pérdida.</li>
+        <li><strong>The Truth Untold – BTS</strong><br>Una balada intensa que transmite vulnerabilidad y sentimientos ocultos. Con voces suaves y un instrumental delicado, la canción refleja la dificultad de mostrar el verdadero yo cuando se teme ser rechazado.</li>
+        <li><strong>Epiphany – BTS</strong><br>Reflexiva y emotiva, habla de aceptarse a uno mismo en medio del dolor. La interpretación transmite calma y tristeza a la vez, como un abrazo que invita a la introspección.</li>
+        <li><strong>All Too Well (10 Minute Version) – Taylor Swift</strong><br>Una historia detallada de un amor perdido, llena de nostalgia y tristeza. Cada verso es un recuerdo que se siente vivo, y la duración extendida permite sumergirse por completo en la intensidad de la ruptura.</li>
+        <li><strong>Back to December – Taylor Swift</strong><br>Una balada arrepentida que evoca la sensación de haber cometido un error en una relación pasada. Es perfecta para esos días de reflexión sobre lo que pudo haber sido.</li>
+        <li><strong>You Broke Me First – Tate McRae</strong><br>Un pop moderno con una letra poderosa sobre la superación de una ruptura dolorosa. La melodía es pegadiza, pero la letra es profundamente triste.</li>
+        <li><strong>Someone Like You – Adele</strong><br>Un clásico atemporal de la tristeza y la aceptación. Su voz emotiva y la sencillez del piano hacen de esta canción una de las más catárticas para un buen desahogo.</li>
+        <li><strong>Happier Than Ever – Billie Eilish</strong><br>Comienza con una melodía suave y melancólica para luego explotar en una liberación de rabia contenida. Ideal para llorar y luego sentir una liberación emocional.</li>
+        <li><strong>Lo Siento – Beret</strong><br>Pop español con una letra profunda sobre las contradicciones de la tristeza y el desamor. Es perfecta para la introspección.</li>
+        <li><strong>Jueves – La Oreja de Van Gogh</strong><br>Una canción con una historia emotiva y dramática que invita a la lágrima fácil.</li>
+        <li><strong>Te Regalo – Carla Morrison</strong><br>Una balada cruda sobre el desapego y el dolor, con una voz que transmite pura vulnerabilidad.</li>
+        <li><strong>Perdóname – Ricky Martin</strong><br>Una disculpa emotiva que toca las fibras más sensibles.</li>
+        <li><strong>Quédate – Vanesa Martín</strong><br>Con una letra profunda sobre la ausencia y la necesidad de un reencuentro.</li>
+        <li><strong>Ya No Quiero Na’ – Lola Índigo</strong><br>Aunque con un ritmo bailable, la letra es un himno de superación después del dolor.</li>
+        <li><strong>Vivir Sin Aire – Maná</strong><br>Un clásico del rock en español que describe el dolor de la pérdida.</li>
+        <li><strong>Mi Historia Entre Tus Dedos – Gianluca Grignani</strong><br>Balada italiana icónica que se ha convertido en un referente de la música triste en español.</li>
+        <li><strong>No Tengo Nada – Alejandro Sanz</strong><br>La voz y el piano crean un ambiente de profunda melancolía.</li>
+        <li><strong>Amárrame – Mon Laferte</strong><br>Aunque tiene ritmo, su letra habla de la intensidad y a veces toxicidad del amor, perfecta para una lágrima de intensidad.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>Estas canciones te dan permiso para sentir. Desde el pop melancólico de Olivia Rodrigo hasta baladas icónicas en español, este top es tu compañero perfecto para un desahogo musical.</p>
+    </div>
+  </div>
+
+  <!-- Modal: Top canciones para motivarte (añadido previamente) -->
+  <div id="motivate-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
+      <button onclick="closeModal('motivate-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para motivarte</h3>
+      <p class="mb-4 text-[var(--muted)]">Necesitas un empujón de energía y confianza. Esta lista te inyecta vibras de "puedes con todo" para que empieces el día o te prepares para un gran reto.</p>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">💪 Playlist de Confianza</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>IDOL – BTS</strong><br>Un himno de autoaceptación y confianza que mezcla sonidos tradicionales coreanos con pop moderno. ¡Energía pura!</li>
+        <li><strong>7 rings – Ariana Grande</strong><br>Un bop sobre el éxito, la independencia y el merecimiento. Perfecta para sentirte poderosa.</li>
+        <li><strong>Don't Stop Me Now – Queen</strong><br>Clásico que es pura euforia. Te hace sentir imparable al instante.</li>
+        <li><strong>Stronger – Kanye West</strong><br>El sample de Daft Punk y la letra de superación te dan un subidón de adrenalina para cualquier tarea.</li>
+        <li><strong>Ain't No Mountain High Enough – Marvin Gaye & Tammi Terrell</strong><br>Música soul motivadora que te recuerda que puedes superar cualquier obstáculo.</li>
+        <li><strong>Good as Hell – Lizzo</strong><br>Una dosis de amor propio y autoestima en forma de funk pop. Obligatoria en tu rutina mañanera.</li>
+        <li><strong>Eye of the Tiger – Survivor</strong><br>El tema de Rocky, imprescindible para la concentración y el esfuerzo físico.</li>
+        <li><strong>Levitating – Dua Lipa</strong><br>Pop disco lleno de fantasía y optimismo. Para flotar hacia tus metas.</li>
+        <li><strong>Roar – Katy Perry</strong><br>Un grito de empoderamiento que te ayuda a encontrar tu voz y tu fuerza interior.</li>
+        <li><strong>Shake It Off – Taylor Swift</strong><br>Perfecta para dejar atrás las críticas y seguir adelante con alegría.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>Este top es tu combustible. Desde la explosión de confianza de Lizzo y Ariana hasta los himnos de superación de BTS y Queen, tienes la banda sonora para conquistar el día.</p>
+    </div>
+  </div>
+
+  <!-- Modal: Top canciones para la noche (añadido previamente) -->
+  <div id="night-songs-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-lg">
+      <button onclick="closeModal('night-songs')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold leading-none">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-[var(--text)]">Top canciones para la noche</h3>
+      <p class="mb-4 text-[var(--muted)]">Cuando el sol se pone, el ambiente se vuelve más íntimo. Esta playlist es perfecta para esos momentos de reflexión, romance, o simplemente para acompañar una cena tranquila bajo la luz de la luna.</p>
+      
+      <h4 class="text-xl font-semibold mb-2 text-[var(--accent2)]">🌙 Playlist Nocturna</h4>
+      <ul class="list-disc pl-5 mb-4 text-[var(--text)]">
+        <li><strong>Blinding Lights – The Weeknd</strong><br>Pop electrónico con un toque de nostalgia ochentera. Ideal para conducir de noche o un ambiente de fiesta más sofisticado.</li>
+        <li><strong>After Hours – The Weeknd</strong><br>Melancolía y beats suaves. Perfecta para las últimas horas de la noche.</li>
+        <li><strong>Golden – Harry Styles</strong><br>Canción ligera y soleada, pero que al anochecer da una sensación de calma y paseo nocturno.</li>
+        <li><strong>Adore You – Harry Styles</strong><br>Con un ritmo contagioso pero relajado, ideal para acompañar conversaciones tranquilas.</li>
+        <li><strong>Positions – Ariana Grande</strong><br>R&B suave y elegante, perfecto para un ambiente íntimo y relajado.</li>
+        <li><strong>Off the Table – Ariana Grande ft. The Weeknd</strong><br>Balada R&B de conversación profunda. Ideal para cuando solo quieres escuchar.</li>
+        <li><strong>Closer – The Chainsmokers ft. Halsey</strong><br>Pop melancólico y electrónico que evoca recuerdos.</li>
+        <li><strong>Noche de Novelas – Micro TDH ft. Lasso</strong><br>Pop latino suave y romántico, ideal para una noche de pareja.</li>
+        <li><strong>Tiroteo (Remix) – Marc Seguí, Rauw Alejandro & Pol Granch</strong><br>Un pop urbano suave con un toque melancólico, ideal para las últimas copas.</li>
+        <li><strong>Tusa – Karol G & Nicki Minaj (versión lounge)</strong><br>Una versión suave que mantiene la esencia pero baja las revoluciones.</li>
+      </ul>
+      
+      <p class="text-sm italic text-[var(--muted)]">✨ Conclusión<br>La noche es tuya. Usa esta playlist para crear un ambiente memorable, ya sea de reflexión o de compañía íntima, con el R&B suave de Ariana y The Weeknd, y los toques latinos de Micro TDH.</p>
+    </div>
+  </div>
+
+  
+  <!-- Funciones de JavaScript para Modales y Navegación -->
+  <script>
+      // IDs de los posts y modales
+      const postMap = {
+          'Top canciones para un viaje': 'travel-songs',
+          'Top canciones para relajarte': 'relax-songs',
+          'Top canciones para una fiesta': 'party-songs',
+          'Top canciones para llorar': 'sad-songs',
+          'Top canciones para motivarte': 'motivate-songs',
+          'Top canciones para la noche': 'night-songs'
+      };
+
+      /**
+       * Abre el modal correspondiente.
+       * @param {string} idBase - La base del ID del modal (ej: 'travel-songs').
+       */
+      function openModal(idBase) {
+          const modalOverlay = document.getElementById(idBase + '-modal-overlay');
+          if (modalOverlay) {
+              modalOverlay.classList.remove('hidden');
+              document.body.style.overflow = 'hidden'; // Evita scroll en el fondo
+          }
+      }
+
+      /**
+       * Cierra el modal correspondiente.
+       * @param {string} idBase - La base del ID del modal (ej: 'travel-songs').
+       */
+      function closeModal(idBase) {
+          const modalOverlay = document.getElementById(idBase + '-modal-overlay');
+          if (modalOverlay) {
+              modalOverlay.classList.add('hidden');
+              document.body.style.overflow = ''; // Restaura el scroll
+          }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+          const menuButton = document.getElementById('mobile-menu-button');
+          const mobileMenu = document.getElementById('mobile-menu');
+          
+          // Toggle del menú
+          menuButton.addEventListener('click', () => {
+              mobileMenu.classList.toggle('hidden');
+          });
+
+          // Cerrar el menú al hacer clic en un enlace (excepto mailto)
+          const navLinks = mobileMenu.querySelectorAll('a');
+          navLinks.forEach(link => {
+              // Comprueba si es un enlace de anclaje interno
+              if (link.getAttribute('href').startsWith('#')) {
+                  link.addEventListener('click', () => {
+                      mobileMenu.classList.add('hidden');
+                  });
+              }
+              // Para el enlace "Contacto" (mailto), solo se cierra el menú si se hace clic
+              if (link.getAttribute('href').startsWith('mailto:')) {
+                  link.addEventListener('click', () => {
+                      mobileMenu.classList.add('hidden');
+                  });
+              }
+          });
+
+          // Implementación para desplazamiento suave al hacer clic en enlaces de anclaje
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener('click', function (e) {
+                  e.preventDefault();
+                  document.querySelector(this.getAttribute('href')).scrollIntoView({
+                      behavior: 'smooth'
+                  });
+              });
+          });
+
+          // Asignar eventos de apertura a los posts del blog
+          document.querySelectorAll('.post').forEach(post => {
+              const title = post.querySelector('h3').textContent.trim();
+              const idBase = postMap[title];
+              if (idBase) {
+                  post.setAttribute('onclick', `openModal('${idBase}')`);
+              }
+          });
+      });
+  </script>
+</body>
+</html>
